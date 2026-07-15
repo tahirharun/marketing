@@ -328,7 +328,6 @@
     opacity:0.7;
   }
 
-  /* ============ SECTION HEADERS ============ */
   section{padding:110px 0;}
   .section-head{
     max-width:620px;
@@ -348,7 +347,6 @@
     margin-top:16px;
   }
 
-  /* ============ SERVICES ============ */
   .services{
     border-top:1px solid var(--hairline);
     background:var(--ink-2);
@@ -384,7 +382,6 @@
     color:var(--paper-dim);
   }
 
-  /* ============ PROCESS ============ */
   .process-grid{
     display:grid;
     grid-template-columns:repeat(4, 1fr);
@@ -414,8 +411,6 @@
     font-size:14px;
     color:var(--paper-dim);
   }
-
-  /* ============ RESULTS ============ */
   .results{
     background:var(--ink-2);
     border-top:1px solid var(--hairline);
@@ -448,8 +443,6 @@
     color:var(--paper-dim);
     margin-top:8px;
   }
-
-  /* ============ TESTIMONIAL ============ */
   .testimonial{
     padding:96px 0;
   }
@@ -485,8 +478,6 @@
     color:var(--slate);
     font-family:var(--mono);
   }
-
-  /* ============ CTA ============ */
   .cta-section{
     border-top:1px solid var(--hairline);
     padding:120px 0;
@@ -508,8 +499,6 @@
     gap:14px;
     flex-wrap:wrap;
   }
-
-  /* ============ FOOTER ============ */
   footer{
     border-top:1px solid var(--hairline);
     padding:48px 0;
@@ -535,8 +524,6 @@
     font-size:12px;
     color:var(--slate);
   }
-
-  /* ============ RESPONSIVE ============ */
   @media (max-width:900px){
     .hero-grid{grid-template-columns:1fr; gap:48px;}
     .service-grid{grid-template-columns:1fr;}
@@ -574,7 +561,6 @@
 
 <main id="top">
 
-  <!-- ============ HERO ============ -->
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
@@ -636,8 +622,6 @@
       </div>
     </div>
   </section>
-
-  <!-- ============ SERVICES ============ -->
   <section class="services" id="services">
     <div class="wrap">
       <div class="section-head">
@@ -680,8 +664,6 @@
       </div>
     </div>
   </section>
-
-  <!-- ============ PROCESS ============ -->
   <section id="process">
     <div class="wrap">
       <div class="section-head">
@@ -713,8 +695,6 @@
       </div>
     </div>
   </section>
-
-  <!-- ============ RESULTS ============ -->
   <section class="results" id="results">
     <div class="wrap">
       <div class="section-head">
@@ -743,7 +723,6 @@
     </div>
   </section>
 
-  <!-- ============ TESTIMONIAL ============ -->
   <section class="testimonial">
     <div class="wrap">
       <div class="panel testimonial-panel">
@@ -759,7 +738,6 @@
     </div>
   </section>
 
-  <!-- ============ CTA ============ -->
   <section class="cta-section" id="contact">
     <div class="wrap">
       <div class="eyebrow">Get started</div>
@@ -787,7 +765,6 @@
 </footer>
 
 <script>
-  // Count-up animation for the hero metric values, triggered once when the panel scrolls into view
   document.addEventListener('DOMContentLoaded', function () {
     var metrics = [
       { el: null, target: 128, suffix: 'K', decimals: 0 },
@@ -838,7 +815,6 @@
       animateCounters();
     }
 
-    // Highlight the nav link for whichever section is currently in view
     var navLinks = document.querySelectorAll('.nav-links a');
     var spySections = Array.from(navLinks).map(function (link) {
       return document.querySelector(link.getAttribute('href'));
