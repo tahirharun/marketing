@@ -77,8 +77,6 @@
     border-radius:50%;
     box-shadow:0 0 0 3px rgba(0,217,163,0.18);
   }
-
-  /* ============ NAV ============ */
   header{
     position:fixed;
     top:0; left:0; right:0;
@@ -151,8 +149,6 @@
     border-color:var(--signal);
     color:var(--signal);
   }
-
-  /* Mobile hamburger toggle — hidden on desktop */
   .nav-toggle{
     display:none;
     flex-direction:column;
@@ -268,8 +264,6 @@
     transition:border-color 0.2s ease;
   }
   .btn-ghost:hover{border-color:var(--signal);}
-
-  /* dashboard panel */
   .panel{
     background:var(--panel);
     border:1px solid var(--hairline);
@@ -466,8 +460,6 @@
     font-size:14px;
     color:var(--paper-dim);
   }
-
-  /* ============ RESULTS ============ */
   .results{
     background:var(--ink-2);
     border-top:1px solid var(--hairline);
@@ -500,8 +492,6 @@
     color:var(--paper-dim);
     margin-top:8px;
   }
-
-  /* ============ TESTIMONIAL ============ */
   .testimonial{
     padding:96px 0;
   }
@@ -675,7 +665,6 @@
   }
   .form-status.show{display:block;}
 
-  /* ============ FOOTER ============ */
   footer{
     border-top:1px solid var(--hairline);
     padding:48px 0;
@@ -818,7 +807,6 @@
     </div>
   </section>
 
-  <!-- ============ SERVICES ============ -->
   <section class="services" id="services">
     <div class="wrap">
       <div class="section-head">
@@ -1079,7 +1067,7 @@
           navToggle.setAttribute('aria-expanded', 'false');
         });
       });
-      
+
       var mobileBreakpoint = window.matchMedia('(max-width:900px)');
       function handleBreakpointChange(e) {
         if (!e.matches) {
