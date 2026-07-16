@@ -151,7 +151,59 @@
     border-color:var(--signal);
     color:var(--signal);
   }
-  .nav-toggle{display:none;}
+
+  /* Mobile hamburger toggle — hidden on desktop */
+  .nav-toggle{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    gap:5px;
+    width:38px;
+    height:34px;
+    padding:0;
+    background:none;
+    border:none;
+    cursor:pointer;
+    flex-shrink:0;
+  }
+  .nav-toggle span{
+    display:block;
+    height:3px;
+    width:100%;
+    border-radius:999px;
+    background:var(--paper);
+    transition:transform 0.25s ease, opacity 0.2s ease, background 0.2s ease;
+  }
+  .nav-toggle:hover span{background:var(--signal);}
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(8px) rotate(45deg);}
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-8px) rotate(-45deg);}
+
+  /* Mobile dropdown menu — hidden until toggled, mobile only */
+  .mobile-menu{
+    display:none;
+    list-style:none;
+    flex-direction:column;
+    max-height:0;
+    overflow:hidden;
+    background:var(--ink-2);
+    border-top:1px solid var(--hairline);
+    transition:max-height 0.3s ease;
+  }
+  .mobile-menu.open{max-height:320px;}
+  .mobile-menu li{border-bottom:1px solid var(--hairline);}
+  .mobile-menu a{
+    display:block;
+    padding:16px 32px;
+    text-decoration:none;
+    font-size:15px;
+    font-weight:500;
+    color:var(--paper-dim);
+    transition:color 0.2s ease;
+  }
+  .mobile-menu a:hover,
+  .mobile-menu a.active{color:var(--signal);}
+
   .hero{
     padding:168px 0 96px;
     position:relative;
@@ -657,6 +709,8 @@
     .process-grid{grid-template-columns:1fr 1fr; row-gap:36px;}
     .results-grid{grid-template-columns:1fr 1fr;}
     .nav-links{display:none;}
+    .nav-toggle{display:flex;}
+    .mobile-menu{display:flex;}
     .contact-grid{grid-template-columns:1fr; gap:44px;}
     .form-row{grid-template-columns:1fr;}
   }
@@ -672,6 +726,7 @@
     .footer-links{gap:16px; flex-wrap:wrap;}
     .contact-form-panel{padding:26px;}
     .contact-section{padding:72px 0;}
+    .nav-cta{padding:10px 14px; font-size:12px;}
   }
 </style>
 </head>
@@ -687,7 +742,16 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
     <a href="#contact" class="nav-cta">Book a strategy call</a>
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-controls="mobile-menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+  <ul class="mobile-menu" id="mobile-menu">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
 </header>
 
 <main id="top">
@@ -999,10 +1063,42 @@
       animateCounters();
     }
 
-    // ---- Nav scroll-spy ----
-    var navLinks = document.querySelectorAll('.nav-links a');
-    var spySections = Array.from(navLinks).map(function (link) {
-      return document.querySelector(link.getAttribute('href'));
+    var navToggle = document.getElementById('nav-toggle');
+    var mobileMenu = document.getElementById('mobile-menu');
+
+    if (navToggle && mobileMenu) {
+      navToggle.addEventListener('click', function () {
+        var willOpen = !mobileMenu.classList.contains('open');
+        mobileMenu.classList.toggle('open', willOpen);
+        navToggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      });
+
+      mobileMenu.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          mobileMenu.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+      
+      var mobileBreakpoint = window.matchMedia('(max-width:900px)');
+      function handleBreakpointChange(e) {
+        if (!e.matches) {
+          mobileMenu.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+      }
+      if (mobileBreakpoint.addEventListener) {
+        mobileBreakpoint.addEventListener('change', handleBreakpointChange);
+      } else if (mobileBreakpoint.addListener) {
+        mobileBreakpoint.addListener(handleBreakpointChange);
+      }
+    }
+
+    var navLinks = document.querySelectorAll('.nav-links a, .mobile-menu a');
+    var spySections = Array.from(new Set(Array.from(navLinks).map(function (link) {
+      return link.getAttribute('href');
+    }))).map(function (href) {
+      return document.querySelector(href);
     }).filter(Boolean);
 
     function setActiveLink(id) {
@@ -1047,7 +1143,6 @@
       });
     }
 
-    // ---- Contact form validation + mailto handoff ----
     var form = document.getElementById('contact-form');
     var status = document.getElementById('cf-status');
 
